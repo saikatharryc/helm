@@ -162,17 +162,17 @@ redis:
     # redisPort: 6379
 
 # Set this incase the above services are disabled.
-# external:
-#     postgresql:
-#         host:
-#         postgresqlUsername: 
-#         postgresqlPassword:
-#         postgresqlDatabase:
-#         port: 5432  # default value is 5432
-#     redis:
-#         host:
-#         password:
-#         port:   6379 # default value is 6379
+external:
+    postgresql:
+        host: localhost
+        postgresqlUsername: judge
+        postgresqlPassword: ""
+        postgresqlDatabase: judge
+        port: 5432  # default value is 5432
+    redis:
+        host:   localhost
+        password:  ""
+        port:   6379 # default value is 6379
 ###############################################################################
 # Configuration
 ###############################################################################
