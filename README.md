@@ -33,11 +33,9 @@ The following table lists the configurable parameters of the Judge0 chart and th
 |`redis.password` | Password for the Redis to create | `a8iuw23iuizy`|
 | `external.postgresql.host`| Host of the external postgres database|`localhost`|
  | `external.postgresql.postgresqlUsername`| User of the external postgres database|`judge`|
-| `external.postgresql.postgresqlPassword`| Host of the 
-external postgres database|`nil`|
+| `external.postgresql.postgresqlPassword`| Host of the external postgres database|`nil`|
 | `external.postgresql.postgresqlDatabase`| Host of the external postgres database|`judge`|
 | `external.postgresql.port`| Host of the external postgres database|`5432`|
-
-| `external.redis.host`| Host for the external Redis instance|`localhost`|
- | `external.redis.password`| Password for the external redis instance|`nil`|
-| `external.redis.port`| Host of the external Redis database|`6379`|
+| `external.redis.host`| Host for the external Redis instance |`localhost`|
+| `external.redis.password`| Password for the external redis instance |`nil`|
+| `external.redis.port`| Host of the external Redis database |`6379`|
