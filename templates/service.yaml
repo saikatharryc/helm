@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}-service
+    kubernetes.io/name: {{ .Chart.Name | quote }}
+    dns: route53
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+spec:
+  clusterIP: None
+  ports:
+  - port: {{ .Values.service.port }}
+    name: http
+    targetPort: http
+    {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.http)))}}
+    nodePort: {{ .Values.service.nodePorts.http }}
+    {{- end }}
+  selector:
+    app: {{ .Chart.Name }}
+
