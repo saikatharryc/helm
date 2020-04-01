@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "dev"
+description: VolantMQ mqtt broker
+name: volantmq
+version: 0.1.0
+maintainers:
+  - name: Ante Gulin
+    email: gnante0@gmail.com

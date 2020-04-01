@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "volantmq.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "volantmq.name" . }}
+    chart: {{ template "volantmq.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    {{- if .Values.service.labels -}}
+    {{ toYaml .Values.service.labels | nindent 4 }}
+    {{- end -}}
+  {{- if .Values.service.annotations }}
+  annotations: {{ toYaml .Values.service.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "volantmq.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- if and .Values.metrics.enabled .Values.metrics.podAnnotations }}
+{{ toYaml .Values.metrics.podAnnotations | indent 8 }}
+        {{- end }}
+      labels:
+        app: {{ template "volantmq.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "volantmq.fullname" . }}
+          image: {{ template "volantmq.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: mqtt
+              containerPort: 1883
+            - name: mqtt-tls
+              containerPort: 1884
+            - name: websocket
+              containerPort: 883
+            - name: websocket-tls
+              containerPort: 884
+            - name: metrics
+              containerPort: 8080
+          env:
+            - name: VOLANTMQ_CONFIG
+              value: "/etc/config/volantmq-config.yaml"
+          volumeMounts:
+            - mountPath: /etc/config
+              name: config-volume
+      volumes:
+        - name: config-volume
+          configMap:
+              name: {{ template "volantmq.fullname" . }}-config

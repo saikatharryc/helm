@@ -1,0 +1,70 @@
+image:
+  registry: docker.io
+  repository: volantmq/volantmq
+  tag: v0.4.0-rc.6
+  pullPolicy: IfNotPresent
+
+service:
+  labels: []
+
+metrics:
+  enabled: false
+
+#  podAnnotations:
+#    prometheus.io/scrape: "true"
+#    prometheus.io/port: "8080"
+
+  # Enable this if you're using https://github.com/coreos/prometheus-operator
+  serviceMonitor:
+    enabled: true
+    ## Specify a namespace if needed
+    namespace: prometheus
+    # fallback to the prometheus default unless specified
+    interval: 3s
+    #scrapeTimeout: 10s
+
+    selector:
+      release: prometheus-operator # prometheus operator release
+
+serviceAccount:
+  ## Specifies whether a ServiceAccount should be created
+  ##
+  create: false
+  ## The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  name:
+
+
+# VolantMQ config
+config: |
+  system:
+    log:
+      console:
+        level: info # available levels: debug, info, warn, error, dpanic, panic, fatal
+    acceptor:
+      maxIncoming: 1000
+      preSpawn: 100
+  auth:
+    anonymous: true
+    order:
+      - internal
+  mqtt:
+    version:
+      - v3.1.1
+    keepAlive:
+      period: 60
+      force: false
+    options:
+      connectTimeout: 2
+      offlineQoS0: true
+      sessionDups: false
+      retainAvail: true
+      subsOverlap: false
+      subsId: false
+      subsShared: false
+      subsWildcard: true
+      receiveMax: 65535
+      maxPacketSize: 268435455
+      maxTopicAlias: 65535
+      maxQoS: 2
+

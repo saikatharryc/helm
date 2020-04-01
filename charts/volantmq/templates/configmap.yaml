@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ template "volantmq.fullname" . }}-config
+    namespace: {{ .Release.Namespace }}
+    labels:
+      app: {{ template "volantmq.name" . }}
+      chart: {{ template "volantmq.chart" . }}
+      release: {{.Release.Name}}
+      heritage: {{.Release.Service}}
+data:
+    volantmq-config.yaml: |-
+  {{- .Values.config | nindent 6 }}
