@@ -1,0 +1,18 @@
+Thank you for installing {{ .Chart.Name }}.
+
+To verify that volantmq has started, run:
+
+  $ kubectl --namespace={{ .Release.Namespace }} get pods | grep 'volantmq'
+
+
+
+{{- if not .Values.persistence.enabled }}
+#################################################################################
+######   WARNING: Persistence is disabled!!! You will lose your data when   #####
+######            the volantmq pod is terminated.                           #####
+#################################################################################
+{{- end }}
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
