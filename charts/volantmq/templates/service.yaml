@@ -39,7 +39,7 @@ spec:
   publishNotReadyAddresses: {{ .Values.service.publishNotReadyAddresses }}
   ports:
     - name: mqtt
-      port: 1883
+      port: {{ .Values.service.port }}
       targetPort: 1883
     - name: metrics
       port: 8080
