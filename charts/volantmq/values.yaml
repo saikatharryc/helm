@@ -1,11 +1,27 @@
+# Default values for home-assistant.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 image:
   registry: docker.io
   repository: volantmq/volantmq
   tag: v0.4.0-rc.6
   pullPolicy: IfNotPresent
 
+## Service configuration
 service:
-  labels: []
+  type: ClusterIP
+  annotations: {}
+  labels: {}
+  clusterIP: None
+  ## List of IP addresses at which the hass-configurator service is available
+  ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+  ##
+  externalIPs: []
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  publishNotReadyAddresses: false
+
 
 metrics:
   enabled: false
