@@ -45,6 +45,26 @@ spec:
               containerPort: 884
             - name: metrics
               containerPort: 8080
+          {{- if .Values.enableReadinessProbe }}
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: metrics
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.readinessProbeInitialDelay }}
+            periodSeconds: {{ .Values.readinessProbeInterval }}
+            timeoutSeconds: {{ .Values.readinessProbeTimeout }}
+          {{- end }}
+          {{- if .Values.enableLivenessProbe }}
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: metrics
+              scheme: HTTP
+            initialDelaySeconds: {{ add .Values.livenessProbeInitialDelay .Values.readinessProbeInitialDelay }}
+            periodSeconds: 60
+            timeoutSeconds: {{ .Values.livenessProbeTimeout }}
+          {{- end }}
           env:
             - name: VOLANTMQ_CONFIG
               value: "/etc/config/volantmq-config.yaml"
