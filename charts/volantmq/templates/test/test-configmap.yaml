@@ -1,0 +1,22 @@
+{{- if .Values.testFramework.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "volantmq.fullname" . }}-test
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "volantmq.name" . }}
+    chart: {{ template "volantmq.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- if .Values.service.labels }}
+{{ toYaml .Values.service.labels | indent 4 }}
+{{- end }}
+data:
+  run.sh: |-
+    @test "Test Health" {
+      url="http://{{ template "volantmq.fullname" . }}.{{ .Release.Namespace }}:8080/health/live"
+      code=$(wget --server-response --spider --timeout 10 --tries 1 ${url} 2>&1 | awk '/^  HTTP/{print $2}')
+      [ "$code" == "200" ]
+    }
+{{- end }}

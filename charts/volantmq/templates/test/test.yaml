@@ -1,0 +1,36 @@
+{{- if .Values.testFramework.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ template "volantmq.fullname" . }}-test
+  labels:
+    app: {{ template "volantmq.name" . }}
+    chart: {{ template "volantmq.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- if .Values.service.labels }}
+{{ toYaml .Values.service.labels | indent 4 }}
+{{- end }}
+  annotations:
+    helm.sh/hook: test-success
+    helm.sh/hook-delete-policy: hook-succeeded
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceAccountName: {{ template "volantmq.serviceAccountName" . }}
+  {{- if .Values.testFramework.securityContext }}
+  securityContext: {{ toYaml .Values.testFramework.securityContext | nindent 4 }}
+  {{- end }}
+  containers:
+    - name: {{ .Release.Name }}-test
+      image: "{{ .Values.testFramework.image}}:{{ .Values.testFramework.tag }}"
+      command: ["/opt/bats/bin/bats", "-t", "/tests/run.sh"]
+      volumeMounts:
+        - mountPath: /tests
+          name: tests
+          readOnly: true
+  volumes:
+  - name: tests
+    configMap:
+      name: {{ template "volantmq.fullname" . }}-test
+  restartPolicy: Never
+{{- end }}
