@@ -65,6 +65,12 @@ persistence:
   size: 8Gi
   annotations: {}
 
+testFramework:
+  enabled: true
+  image: "bats/bats"
+  tag: "v1.1.0"
+  securityContext: {}
+
 # VolantMQ config
 config: |
   system:
@@ -74,6 +80,15 @@ config: |
     acceptor:
       maxIncoming: 1000
       preSpawn: 100
+  plugins:
+    enabled:
+      - health
+    config:
+      health:
+        - backend: health
+          config:
+            livenessEndpoint: live
+            readinessEndpoint: ready
   auth:
     anonymous: true
     order:
