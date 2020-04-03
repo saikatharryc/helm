@@ -72,26 +72,16 @@ testFramework:
   tag: "v1.1.0"
   securityContext: {}
 
-# whether configure readinessProbe on controller pod
-enableReadinessProbe: false
-
-# How often (in seconds) to check controller readiness
-readinessProbeInterval: 60
-
-# How long to wait before timeout (in seconds) when checking controller readiness
-readinessProbeTimeout: 3
-
-# How long to wait (in seconds) before checking the readiness probe
-readinessProbeInitialDelay: 30
-
-# whether configure livenessProbe on controller pod
-enableLivenessProbe: false
-
-# How long to wait (in seconds) before checking the liveness probe
-livenessProbeInitialDelay: 30
-
-# How long to wait before timeout (in seconds) when checking controller liveness
-livenessProbeTimeout: 1
+readinessProbe:
+  enable: true
+  interval: 60
+  timeout: 3
+  initialDelay: 30
+  
+livenessProbe:
+  enable: false
+  initialDelay: 30
+  timeout: 1
 
 ingress:
   enabled: false
