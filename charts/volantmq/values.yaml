@@ -72,6 +72,17 @@ testFramework:
   tag: "v1.1.0"
   securityContext: {}
 
+readinessProbe:
+  enable: true
+  interval: 60
+  timeout: 3
+  initialDelay: 30
+  
+livenessProbe:
+  enable: false
+  initialDelay: 30
+  timeout: 1
+
 ingress:
   enabled: false
   annotations: {}
