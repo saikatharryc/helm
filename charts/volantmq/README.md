@@ -12,7 +12,7 @@ Current chart version is `0.1.0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config | string | [config](/charts/volantmq/values.yaml#L108) | The VolantMQ config |
+| config | string | [config](/charts/volantmq/values.yaml#L147) | The VolantMQ config |
 | image.pullPolicy | string | `"IfNotPresent"` | Image repository pull policy  |
 | image.registry | string | `"docker.io"` | URL to registry |
 | image.repository | string | `"volantmq/volantmq"` | Image repository tag  |
