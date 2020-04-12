@@ -12,7 +12,7 @@ Current chart version is `0.1.0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config | string | [config](/charts/volantmq/values.yaml#L147) | The VolantMQ config |
+| config | string | [config](/charts/volantmq/values.yaml#L147) | The VolantMQ config (for more detailed click config related info [here](https://github.com/VolantMQ/volantmq#config-file) )|
 | image.pullPolicy | string | `"IfNotPresent"` | Image repository pull policy  |
 | image.registry | string | `"docker.io"` | URL to registry |
 | image.repository | string | `"volantmq/volantmq"` | Image repository name  |
@@ -55,3 +55,4 @@ Current chart version is `0.1.0`
 | testFramework.image | string | `"bats/bats"` | Image to be used for testing of the chart |
 | testFramework.securityContext | object | `{}` | define securityContext object if any |
 | testFramework.tag | string | `"v1.1.0"` | Image Tag for the test framework |
+
