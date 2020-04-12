@@ -7,7 +7,7 @@ image:
   registry: docker.io
   # image.repository -- Image repository name 
   repository: volantmq/volantmq
-  # image.repository -- Image repository tag 
+  # image.tag -- Image repository tag 
   tag: v0.4.0-rc.6
   # image.pullPolicy -- Image repository pull policy 
   pullPolicy: IfNotPresent
@@ -16,24 +16,24 @@ image:
 service:
   # service.type -- Kubernetes Service type
   type: ClusterIP
-  # service.type -- Kubernetes Service annotations
+  # service.annotations -- Kubernetes Service annotations
   annotations: {}
-  # service.type -- Kubernetes Service lavels
+  # service.labels -- Kubernetes Service lavels
   labels: {}
-  # service.type -- Kubernetes Service port
+  # service.port -- Kubernetes Service port
   port: 1883
-  # service.type -- Kubernetes clusterIp if any
+  # service.clusterIP -- Kubernetes clusterIp if any
   clusterIP: None
   ## List of IP addresses at which the hass-configurator service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
   ##
-  # service.type -- Kubernetes Service externalIps
+  # service.externalIPs -- Kubernetes Service externalIps
   externalIPs: []
-  # service.type -- Kubernetes Service LoadBalancerIp
+  # service.loadBalancerIP -- Kubernetes Service LoadBalancerIp
   loadBalancerIP: ""
-  # service.type -- Kubernetes Service Load Balancer source Range
+  # service.loadBalancerSourceRanges -- Kubernetes Service Load Balancer source Range
   loadBalancerSourceRanges: []
-  # service.type -- Kubernetes Service publishNotReadyAddresses
+  # service.publishNotReadyAddresses -- Kubernetes Service publishNotReadyAddresses
   publishNotReadyAddresses: false
 
 
@@ -88,7 +88,7 @@ persistence:
   annotations: {}
 
 testFramework:
-  # testFramework.enable -- Enable Test Framework
+  # testFramework.enabled -- Enable Test Framework
   enabled: true
   # testFramework.image -- Image to be used for testing of the chart
   image: "bats/bats"

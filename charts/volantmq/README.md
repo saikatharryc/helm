@@ -15,8 +15,8 @@ Current chart version is `0.1.0`
 | config | string | [config](/charts/volantmq/values.yaml#L147) | The VolantMQ config |
 | image.pullPolicy | string | `"IfNotPresent"` | Image repository pull policy  |
 | image.registry | string | `"docker.io"` | URL to registry |
-| image.repository | string | `"volantmq/volantmq"` | Image repository tag  |
-| image.tag | string | `"v0.4.0-rc.6"` |  |
+| image.repository | string | `"volantmq/volantmq"` | Image repository name  |
+| image.tag | string | `"v0.4.0-rc.6"` | Image repository tag  |
 | ingress.annotations | object | `{}` | Custom annotations for the ingress (e.g ingress.class ) |
 | ingress.enabled | bool | `false` | Enable Ingress Object |
 | ingress.extraPaths | list | `[]` | Extra paths to prepend to every host configuration. This is useful when working with annotation based services. |
@@ -40,18 +40,18 @@ Current chart version is `0.1.0`
 | readinessProbe.initialDelay | int | `30` | Intial Delay to take in account |
 | readinessProbe.interval | int | `60` | Readiness check interval |
 | readinessProbe.timeout | int | `3` |  Define custom timeout  |
-| service.annotations | object | `{}` |  |
-| service.clusterIP | string | `"None"` |  |
-| service.externalIPs | list | `[]` |  |
-| service.labels | object | `{}` |  |
-| service.loadBalancerIP | string | `""` |  |
-| service.loadBalancerSourceRanges | list | `[]` |  |
-| service.port | int | `1883` |  |
-| service.publishNotReadyAddresses | bool | `false` |  |
-| service.type | string | `"ClusterIP"` | Kubernetes Service publishNotReadyAddresses |
+| service.annotations | object | `{}` | Kubernetes Service annotations |
+| service.clusterIP | string | `"None"` | Kubernetes clusterIp if any |
+| service.externalIPs | list | `[]` | Kubernetes Service externalIps |
+| service.labels | object | `{}` | Kubernetes Service lavels |
+| service.loadBalancerIP | string | `""` | Kubernetes Service LoadBalancerIp |
+| service.loadBalancerSourceRanges | list | `[]` | Kubernetes Service Load Balancer source Range |
+| service.port | int | `1883` | Kubernetes Service port |
+| service.publishNotReadyAddresses | bool | `false` | Kubernetes Service publishNotReadyAddresses |
+| service.type | string | `"ClusterIP"` | Kubernetes Service type |
 | serviceAccount.create | bool | `false` | Specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `nil` | The name of the ServiceAccount to use. |
-| testFramework.enabled | bool | `true` |  |
+| testFramework.enabled | bool | `true` | Enable Test Framework |
 | testFramework.image | string | `"bats/bats"` | Image to be used for testing of the chart |
 | testFramework.securityContext | object | `{}` | define securityContext object if any |
 | testFramework.tag | string | `"v1.1.0"` | Image Tag for the test framework |
