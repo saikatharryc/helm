@@ -1,4 +1,4 @@
-volantmq
+VolantMQ helm chart
 ========
 VolantMQ mqtt broker
 
