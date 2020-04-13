@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: {{  template "volantmq.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ template "volantmq.fullname" . }}
