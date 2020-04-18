@@ -23,6 +23,26 @@ spec:
     spec:
       restartPolicy: Always
 {{- include "judge0.imagePullSecrets" . | indent 6 }}
+      initContainers:
+      - name: init-wait-for-dependencies
+        image: docker.io/saikatharryc/wait_for_dep:latest
+        command: ["/docker-entrypoint.sh"]
+        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
+        env:
+        {{- if .Values.redis.enabled }} 
+        - name: REDIS_HOST
+          value: {{ template "judge0.redis.fullname" . }}
+        {{- else }} 
+        - name: REDIS_HOST
+          value:  {{ .Values.external.redis.host | quote }}
+        {{- end }}
+        {{- if .Values.postgresql.enabled }}
+        - name: POSTGRES_HOST
+          value: {{ template "judge0.postgresql.fullname" . }}
+        {{- else }}
+        - name: POSTGRES_HOST
+          value: {{ .Values.external.postgresql.host | quote }}
+        {{- end }}
       containers:
       - name: {{ .Chart.Name }}-api
         image: {{ template "judge0.image" . }}
@@ -143,26 +163,6 @@ spec:
           value:  {{ .Values.MAINTENANCE_MESSAGE | quote }}
         - name: MAINTENANCE_MODE
           value:  {{ .Values.MAINTENANCE_MODE | quote }}
-      initContainers:
-      - name: init-wait-for-dependencies
-        image: docker.io/saikatharryc/wait_for_dep:latest
-        command: ["/docker-entrypoint.sh"]
-        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
-        env:
-        {{- if .Values.redis.enabled }} 
-        - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
-        {{- else }} 
-        - name: REDIS_HOST
-          value:  {{ .Values.external.redis.host | quote }}
-        {{- end }}
-        {{- if .Values.postgresql.enabled }}
-        - name: POSTGRES_HOST
-          value: {{ template "judge0.postgresql.fullname" . }}
-        {{- else }}
-        - name: POSTGRES_HOST
-          value: {{ .Values.external.postgresql.host | quote }}
-        {{- end }}
 ---
 apiVersion: {{ template "judge0.deployment.apiVersion" . }}
 kind: Deployment
@@ -189,6 +189,26 @@ spec:
     spec:
       restartPolicy: Always
 # {{- include "judge0.imagePullSecrets" . | indent 6 }}
+      initContainers:
+      - name: init-wait-for-dependencies
+        image: docker.io/saikatharryc/wait_for_dep:latest
+        command: ["/docker-entrypoint.sh"]
+        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
+        env:
+        {{- if .Values.redis.enabled }} 
+        - name: REDIS_HOST
+          value: {{ template "judge0.redis.fullname" . }}
+        {{- else }} 
+        - name: REDIS_HOST
+          value:  {{ .Values.external.redis.host | quote }}
+        {{- end }}
+        {{- if .Values.postgresql.enabled }}
+        - name: POSTGRES_HOST
+          value: {{ template "judge0.postgresql.fullname" . }}
+        {{- else }}
+        - name: POSTGRES_HOST
+          value: {{ .Values.external.postgresql.host | quote }}
+        {{- end }}
       containers:
       - name: {{ .Chart.Name }}-worker
         image: {{ template "judge0.image" . }}
@@ -310,23 +330,3 @@ spec:
           value:  {{ .Values.MAINTENANCE_MESSAGE | quote }}
         - name: MAINTENANCE_MODE
           value:  {{ .Values.MAINTENANCE_MODE | quote }}
-      initContainers:
-      - name: init-wait-for-dependencies
-        image: docker.io/saikatharryc/wait_for_dep:latest
-        command: ["/docker-entrypoint.sh"]
-        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
-        env:
-        {{- if .Values.redis.enabled }} 
-        - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
-        {{- else }} 
-        - name: REDIS_HOST
-          value:  {{ .Values.external.redis.host | quote }}
-        {{- end }}
-        {{- if .Values.postgresql.enabled }}
-        - name: POSTGRES_HOST
-          value: {{ template "judge0.postgresql.fullname" . }}
-        {{- else }}
-        - name: POSTGRES_HOST
-          value: {{ .Values.external.postgresql.host | quote }}
-        {{- end }}
