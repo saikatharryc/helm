@@ -149,8 +149,6 @@ spec:
         command: ["/docker-entrypoint.sh"]
         args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
         env:
-        - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
           value: {{ template "judge0.redis.fullname" . }}
@@ -318,8 +316,6 @@ spec:
         command: ["/docker-entrypoint.sh"]
         args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
         env:
-        - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
           value: {{ template "judge0.redis.fullname" . }}
