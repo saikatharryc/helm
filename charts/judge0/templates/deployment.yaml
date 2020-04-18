@@ -28,7 +28,7 @@ spec:
         image: {{ template "judge0.image" . }}
         securityContext:
           privileged: true
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - name: http-port
           containerPort: 3000
@@ -174,7 +174,7 @@ spec:
         image: {{ template "judge0.image" . }}
         securityContext:
           privileged: true
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args:
         - bash
         - -c
