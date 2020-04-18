@@ -150,6 +150,8 @@ postgresql:
     service:
         # port is defaulting to 5432
         port: 5432
+    persistence:
+        enabled: false
 
 # if you are using enabled true, for further configuration you can look at https://github.com/helm/charts/tree/master/stable/redis#parameters
 redis:
@@ -159,7 +161,10 @@ redis:
         enabled: false
     password: a8iuw23iuizy
     # redisPort is bydefault set to 6379, change if needed in below line.
-    # redisPort: 6379
+    redisPort: 6379
+    master:
+        persistence:
+            enabled: false
 
 # Set this incase the above services are disabled.
 external:
