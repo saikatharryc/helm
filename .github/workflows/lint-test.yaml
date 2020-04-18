@@ -11,12 +11,12 @@ jobs:
 
       - name: Fetch history
         run: git fetch --prune --unshallow
-        
+    
       - name: Run chart-testing (lint)
         id: lint
-        uses: helm/chart-testing-action@v1.0.0-rc.1
+        uses: helm/chart-testing-action@v1.0.0-rc.2
         with:    
-          command: lint
+          command: helm repo add stable https://kubernetes-charts.storage.googleapis.com/ && lint
           config: ct.yaml 
 
       - name: Create kind cluster
