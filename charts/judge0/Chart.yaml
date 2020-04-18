@@ -1,6 +1,6 @@
-apiVersion: v1
+apiVersion: v2
 name: judge0
-version: 1.0.9
+version: 1.0.7-alpha.01
 appVersion: 1.5.0
 description: Helm implementation of Judge0 | Free,robust and scalable open-source online code execution system.
 keywords:
@@ -16,6 +16,19 @@ home: https://api.judge0.com
 icon: https://github.com/judge0/api/raw/master/.github/wallpaper.png?raw=true
 sources:
   - https://github.com/judge0/api
+dependencies:
+  - name: postgresql
+    version: 7.7.2
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: postgresql.enabled
+    tags:
+      - judge0-database
+  - name: redis
+    version: 10.2.0
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: redis.enabled
+    tags:
+      - judge0-redis
 maintainers:
   - name: saikatharryc
     email: saikatchakrabortty2@gmail.com

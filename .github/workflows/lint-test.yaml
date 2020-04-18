@@ -6,18 +6,39 @@ jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
+      - name: df
+        run: |
+          df -h
+          docker system df
+          docker ps
+
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: df-after checkout
+        run: |
+          df -h
+          docker system df
 
       - name: Fetch history
         run: git fetch --prune --unshallow
 
+      - name: df-after-fetch
+        run: |
+          df -h
+          docker system df
+
       - name: Run chart-testing (lint)
         id: lint
-        uses: helm/chart-testing-action@v1.0.0-alpha.3
+        uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: lint
           config: ct.yaml
+
+      - name: df-after-lint
+        run: |
+          df -h
+          docker system df
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.0.0-alpha.3
@@ -26,7 +47,12 @@ jobs:
         # Only build a kind cluster if there are chart changes to test.
         if: steps.lint.outputs.changed == 'true'
 
+      - name: df-after cluster creation
+        run: |
+          df -h
+          docker system df
+
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v1.0.0-alpha.3
+        uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: install
