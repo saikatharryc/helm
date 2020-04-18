@@ -24,7 +24,7 @@ jobs:
         with:
           installLocalPathProvisioner: true
         # Only build a kind cluster if there are chart changes to test.
-        if: steps.lint.outputs.changed == 'true'
+        # if: steps.lint.outputs.changed == 'true'
 
       - name: df-after cluster creation
         run: |
@@ -36,7 +36,7 @@ jobs:
         with:
           command: install
           config: ct.yaml
-          
+
       - name: df
         run: |
           df -h
