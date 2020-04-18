@@ -1,8 +1,8 @@
 apiVersion: v1
 name: judge0
-version: 1.0.1
+version: 1.0.2
 appVersion: 1.5.0
-description: Helm implementation of Judge0 | Free,robust and scalable open-source online code execution system. 
+description: Helm implementation of Judge0 | Free,robust and scalable open-source online code execution system.
 keywords:
   - online-judge
   - online-compiler
