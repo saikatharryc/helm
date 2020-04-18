@@ -141,7 +141,7 @@ readinessProbe:
     timeout: 3
     # readinessProbe.initialDelay -- Intial Delay to take in account
     initialDelay: 30
-  
+
 livenessProbe:
     # livenessProbe.enable -- Enabling Readiness Probe
     enable: false
