@@ -10,7 +10,7 @@ jobs:
         run: |
           df -h
           docker system df
-          docker ps
+          docker images
 
       - name: Checkout
         uses: actions/checkout@v2
