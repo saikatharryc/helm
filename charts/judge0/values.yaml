@@ -301,4 +301,3 @@ external:
 # Maximum number of submissions that can be created or get in a batch.
 # Default: 20
 # MAX_SUBMISSION_BATCH_SIZE:
-
