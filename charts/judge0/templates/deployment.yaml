@@ -31,7 +31,7 @@ spec:
         env:
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         {{- else }} 
         - name: REDIS_HOST
           value:  {{ .Values.external.redis.host | quote }}
@@ -75,7 +75,7 @@ spec:
           value:  {{ .Values.COUNT | quote }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         - name: REDIS_PASSWORD
           value: {{ .Values.redis.password | quote }}
         - name: REDIS_PORT
@@ -197,7 +197,7 @@ spec:
         env:
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         {{- else }} 
         - name: REDIS_HOST
           value:  {{ .Values.external.redis.host | quote }}
@@ -242,7 +242,7 @@ spec:
           value:  {{ .Values.COUNT | quote }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         - name: REDIS_PASSWORD
           value: {{ .Values.redis.password | quote }}
         - name: REDIS_PORT
