@@ -16,7 +16,7 @@ jobs:
         id: lint
         uses: helm/chart-testing-action@v1.0.0-rc.2
         with:    
-          command: helm repo add stable https://kubernetes-charts.storage.googleapis.com/ && lint
+          command: lint
           config: ct.yaml 
 
       - name: Create kind cluster
