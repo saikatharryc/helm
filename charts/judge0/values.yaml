@@ -123,7 +123,7 @@ MAINTENANCE_MODE: false
 # INTERVAL:
 
 # Specify how many parallel workers to run.
-# Default: 1
+# Default: 3
 COUNT: 3
 
 # Specify maximum queue size. Represents maximum number of submissions that
@@ -147,9 +147,9 @@ postgresql:
     postgresqlUsername: judgemaster
     postgresqlPassword: uaeyjbzuyq
     postgresqlDatabase: judge
-    # service:
+    service:
         # port is defaulting to 5432
-        # port: 5432
+        port: 5432
 
 # if you are using enabled true, for further configuration you can look at https://github.com/helm/charts/tree/master/stable/redis#parameters
 redis:
