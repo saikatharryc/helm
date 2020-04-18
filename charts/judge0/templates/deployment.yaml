@@ -52,6 +52,26 @@ spec:
         ports:
         - name: http-port
           containerPort: 3000
+      {{- if .Values.readinessProbe.enable }}
+        readinessProbe:
+          httpGet:
+            path: /system_info
+            port: http-port
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelay }}
+          periodSeconds: {{ .Values.readinessProbe.interval }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeout }}
+        {{- end }}
+        {{- if .Values.livenessProbe.enable }}
+        livenessProbe:
+          httpGet:
+            path: /config_info
+            port: http-port
+            scheme: HTTP
+          initialDelaySeconds: {{ add .Values.livenessProbe.initialDelay .Values.readinessProbe.initialDelay }}
+          periodSeconds: 60
+          timeoutSeconds: {{ .Values.livenessProbe.timeout }}
+        {{- end }}
         env:
         - name: RAILS_ENV
           value:  {{  .Values.RAILS_ENV | quote }}

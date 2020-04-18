@@ -132,7 +132,24 @@ COUNT: 1
 # Default: 100
 # MAX_QUEUE_SIZE:
 
-
+readinessProbe:
+  # readinessProbe.enable -- Enabling Readiness Probe
+  enable: true
+  # readinessProbe.interval -- Readiness check interval
+  interval: 60
+  # readinessProbe.timeout --  Define custom timeout 
+  timeout: 3
+  # readinessProbe.initialDelay -- Intial Delay to take in account
+  initialDelay: 30
+  
+livenessProbe:
+  # livenessProbe.enable -- Enabling Readiness Probe
+  enable: false
+  # livenessProbe.initialDelay -- Intial Delay to take in account
+  initialDelay: 30
+  # livenessProbe.timeout --  Define custom timeout 
+  timeout: 1
+  
 ###############################################################################
 # Database
 ###############################################################################
