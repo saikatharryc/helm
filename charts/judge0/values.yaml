@@ -9,7 +9,7 @@ image:
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
 service:
-    type: LoadBalancer
+    type: ClusterIP
     # HTTP Port
     port: 80
     ## loadBalancerIP:
@@ -123,8 +123,8 @@ MAINTENANCE_MODE: false
 # INTERVAL:
 
 # Specify how many parallel workers to run.
-# Default: 3
-COUNT: 3
+# Default: 1
+COUNT: 1
 
 # Specify maximum queue size. Represents maximum number of submissions that
 # can wait in the queue at once. If request for new submission comes and the
