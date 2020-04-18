@@ -171,7 +171,7 @@ external:
         port: 5432  # default value is 5432
     redis:
         host: localhost
-        password:  ""
+        password: ""
         port: 6379  # default value is 6379
 ###############################################################################
 # Configuration
