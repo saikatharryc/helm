@@ -36,17 +36,17 @@ create_kind_cluster() {
 
     curl -sSLo kind "https://github.com/kubernetes-sigs/kind/releases/download/$KIND_VERSION/kind-linux-amd64"
     chmod +x kind
-    sudo mv kind /usr/local/bin/kind
+    mv kind /usr/local/bin/kind
 
     kind create cluster --name "$CLUSTER_NAME" --config test/kind-config.yaml --image "kindest/node:$K8S_VERSION" --wait 60s
 
     echo 'Copying kubeconfig to container...'
     
-    cat /root/.kube/config 
+    # cat /root/.kube/config 
 
-    local kubeconfig
-    kubeconfig="$(kind get kubeconfig-path --name "$CLUSTER_NAME")"	
-    docker cp "$kubeconfig" ct:/root/.kube/config
+    # local kubeconfig
+    # kubeconfig="$(kind get kubeconfig-path --name "$CLUSTER_NAME")"	
+    # docker cp "$kubeconfig" ct:/root/.kube/config
 
     docker cp:/root/.kube/config ct:/root/.kube/config
 
