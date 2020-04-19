@@ -43,10 +43,11 @@ create_kind_cluster() {
     echo 'Copying kubeconfig to container...'
     # echo  "$KUBECONFIG"
     # cat config
-    docker_exec mkdir /.kube
-    docker_exec touch /.kube/config
-    sudo docker cp config ct:/.kube/config
-
+    docker_exec mkdir /root/.kube
+    docker_exec touch  /root/.kube/config
+    sudo docker cp config ct:/root/.kube/config
+    docker_exec touch /root/.kube/config
+    docker_exec set KUBECONFIG=/root/.kube/config
     docker_exec kubectl cluster-info
     echo
 
