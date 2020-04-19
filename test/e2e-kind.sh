@@ -38,7 +38,7 @@ create_kind_cluster() {
     chmod +x kind
     sudo mv kind /usr/local/bin/kind
 
-    kind create cluster --name "$CLUSTER_NAME" --config test/kind-config.yaml --image "kindest/node:$K8S_VERSION" --kubeconfig --wait 60s
+    kind create cluster --name "$CLUSTER_NAME" --config test/kind-config.yaml --image "kindest/node:$K8S_VERSION" --kubeconfig /root/.kube/config --wait 60s
 
     echo 'Copying kubeconfig to container...'
     echo  $KUBECONFIG
