@@ -42,9 +42,9 @@ create_kind_cluster() {
 
     echo 'Copying kubeconfig to container...'
     
-    cat ~/kube/.config
+    sudo cat /root/.kube/config
 
-    docker cp ~/kube/.config ct:/root/.kube/config
+    docker cp /root/.kube/config ct:/root/.kube/config
 
     docker_exec kubectl cluster-info
     echo
