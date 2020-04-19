@@ -40,11 +40,13 @@ create_kind_cluster() {
 
     kind create cluster --name "$CLUSTER_NAME" --config test/kind-config.yaml --image "kindest/node:$K8S_VERSION" --wait 60s
 
+    kubectl cluster-info --context kind-chart-testing
+
     echo 'Copying kubeconfig to container...'
     
-    sudo cat /root/.kube/config 
+    echo $(kubectl config view --context kind-chart-testing)>conf
 
-    sudo docker cp:/root/.kube/config ct:/root/.kube/config
+    docker cp conf ct:/root/.kube/config
 
     docker_exec kubectl cluster-info
     echo
