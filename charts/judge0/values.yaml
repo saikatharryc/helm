@@ -4,26 +4,26 @@
 image:
     registry: docker.io
     repository: judge0/api
-    tag:    1.5.0
+    tag: 1.5.0
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
 service:
-  type: LoadBalancer
-  # HTTP Port
-  port: 80
-  ## loadBalancerIP:
-  ##
-  ## nodePorts:
-  ##   http: <to set explicitly, choose port between 30000-32767>
-  nodePorts:
-    http: ""
-  ## Enable client source IP preservation
-  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
-  ##
-  externalTrafficPolicy: Cluster
-  ## Service annotations done as key:value pairs
-  annotations:
+    type: ClusterIP
+    # HTTP Port
+    port: 80
+    ## loadBalancerIP:
+    ##
+    ## nodePorts:
+    ##   http: <to set explicitly, choose port between 30000-32767>
+    nodePorts:
+        http: ""
+    ## Enable client source IP preservation
+    ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## Service annotations done as key:value pairs
+    annotations:
 ###############################################################################
 # Rails Environment
 ###############################################################################
@@ -33,7 +33,7 @@ service:
 
 # Specify maximum number of concurrent Rails threads.
 # Default: 5
-RAILS_MAX_THREADS:  10
+RAILS_MAX_THREADS: 10
 
 # Maintenance mode is a mode in which clients cannot
 # create or delete submissions while maintenance is enabled.
@@ -43,11 +43,11 @@ MAINTENANCE_MODE: false
 # Set custom maintenance message that will be returned to clients
 # who try to create or delete submisions.
 # Default: Judge0 API is currently in maintenance.
-# MAINTENANCE_MESSAGE:  
+# MAINTENANCE_MESSAGE:
 
 # Secret key base for production, if not set it will be randomly generated
 # Default: randomly generated
-# SECRET_KEY_BASE:    
+# SECRET_KEY_BASE:
 
 # Allow only specified origins.
 # If left blank, then all origins will be allowed (denoted with '*').
@@ -124,7 +124,7 @@ MAINTENANCE_MODE: false
 
 # Specify how many parallel workers to run.
 # Default: 1
-COUNT: 3
+COUNT: 1
 
 # Specify maximum queue size. Represents maximum number of submissions that
 # can wait in the queue at once. If request for new submission comes and the
@@ -132,6 +132,23 @@ COUNT: 3
 # Default: 100
 # MAX_QUEUE_SIZE:
 
+readinessProbe:
+    # readinessProbe.enable -- Enabling Readiness Probe
+    enable: true
+    # readinessProbe.interval -- Readiness check interval
+    interval: 60
+    # readinessProbe.timeout --  Define custom timeout
+    timeout: 3
+    # readinessProbe.initialDelay -- Intial Delay to take in account
+    initialDelay: 30
+
+livenessProbe:
+    # livenessProbe.enable -- Enabling Readiness Probe
+    enable: false
+    # livenessProbe.initialDelay -- Intial Delay to take in account
+    initialDelay: 30
+    # livenessProbe.timeout --  Define custom timeout
+    timeout: 1
 
 ###############################################################################
 # Database
@@ -143,23 +160,28 @@ postgresql:
 ## if you are using enabled true, for further configuration you can look at https://github.com/helm/charts/tree/master/stable/postgresql#parameters
     enabled: true
     image:
-        tag:    9.6 #default version for the postgres.
+        tag: 9.6    # default version for the postgres.
     postgresqlUsername: judgemaster
     postgresqlPassword: uaeyjbzuyq
     postgresqlDatabase: judge
-    # service:
+    service:
         # port is defaulting to 5432
-        # port: 5432 
+        port: 5432
+    persistence:
+        enabled: false
 
 # if you are using enabled true, for further configuration you can look at https://github.com/helm/charts/tree/master/stable/redis#parameters
 redis:
 ## Whether to deploy a redis server to satisfy the applications requirements. To use an external redis instance set this to false and configure the external.redis parameters
     enabled: true
     cluster:
-        enabled: false  
-    password:   a8iuw23iuizy
+        enabled: false
+    password: a8iuw23iuizy
     # redisPort is bydefault set to 6379, change if needed in below line.
-    # redisPort: 6379
+    redisPort: 6379
+    master:
+        persistence:
+            enabled: false
 
 # Set this incase the above services are disabled.
 external:
@@ -170,9 +192,9 @@ external:
         postgresqlDatabase: judge
         port: 5432  # default value is 5432
     redis:
-        host:   localhost
-        password:  ""
-        port:   6379 # default value is 6379
+        host: localhost
+        password: ""
+        port: 6379  # default value is 6379
 ###############################################################################
 # Configuration
 ###############################################################################
@@ -192,7 +214,7 @@ external:
 # For example, ALLOWED_LANGUAGES_FOR_COMPILER_OPTIONS:"C C++ Java" would only
 # allow setting compiler options for languages C, C++ and Java.
 # Default: empty - for every compiled language setting compiler options is allowed.
-# ALLOWED_LANGUAGES_FOR_COMPILER_OPTIONS: 
+# ALLOWED_LANGUAGES_FOR_COMPILER_OPTIONS:
 
 # If enabled user is allowed to set custom command line arguments.
 # Default: true
@@ -301,4 +323,3 @@ external:
 # Maximum number of submissions that can be created or get in a batch.
 # Default: 20
 # MAX_SUBMISSION_BATCH_SIZE:
-

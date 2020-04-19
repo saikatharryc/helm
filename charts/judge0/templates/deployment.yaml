@@ -23,15 +23,55 @@ spec:
     spec:
       restartPolicy: Always
 {{- include "judge0.imagePullSecrets" . | indent 6 }}
+      initContainers:
+      - name: init-wait-for-dependencies
+        image: docker.io/saikatharryc/wait_for_dep:latest
+        command: ["/docker-entrypoint.sh"]
+        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
+        env:
+        {{- if .Values.redis.enabled }} 
+        - name: REDIS_HOST
+          value: {{ template "judge0.redis.fullname" . }}-master
+        {{- else }} 
+        - name: REDIS_HOST
+          value:  {{ .Values.external.redis.host | quote }}
+        {{- end }}
+        {{- if .Values.postgresql.enabled }}
+        - name: POSTGRES_HOST
+          value: {{ template "judge0.postgresql.fullname" . }}
+        {{- else }}
+        - name: POSTGRES_HOST
+          value: {{ .Values.external.postgresql.host | quote }}
+        {{- end }}
       containers:
       - name: {{ .Chart.Name }}-api
         image: {{ template "judge0.image" . }}
         securityContext:
           privileged: true
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - name: http-port
           containerPort: 3000
+      {{- if .Values.readinessProbe.enable }}
+        readinessProbe:
+          httpGet:
+            path: /system_info
+            port: http-port
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelay }}
+          periodSeconds: {{ .Values.readinessProbe.interval }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeout }}
+        {{- end }}
+        {{- if .Values.livenessProbe.enable }}
+        livenessProbe:
+          httpGet:
+            path: /config_info
+            port: http-port
+            scheme: HTTP
+          initialDelaySeconds: {{ add .Values.livenessProbe.initialDelay .Values.readinessProbe.initialDelay }}
+          periodSeconds: 60
+          timeoutSeconds: {{ .Values.livenessProbe.timeout }}
+        {{- end }}
         env:
         - name: RAILS_ENV
           value:  {{  .Values.RAILS_ENV | quote }}
@@ -55,7 +95,7 @@ spec:
           value:  {{ .Values.COUNT | quote }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         - name: REDIS_PASSWORD
           value: {{ .Values.redis.password | quote }}
         - name: REDIS_PORT
@@ -169,12 +209,32 @@ spec:
     spec:
       restartPolicy: Always
 # {{- include "judge0.imagePullSecrets" . | indent 6 }}
+      initContainers:
+      - name: init-wait-for-dependencies
+        image: docker.io/saikatharryc/wait_for_dep:latest
+        command: ["/docker-entrypoint.sh"]
+        args: ["wait_for", "redis:REDIS_HOST", "postgressql:POSTGRES_HOST"]
+        env:
+        {{- if .Values.redis.enabled }} 
+        - name: REDIS_HOST
+          value: {{ template "judge0.redis.fullname" . }}-master
+        {{- else }} 
+        - name: REDIS_HOST
+          value:  {{ .Values.external.redis.host | quote }}
+        {{- end }}
+        {{- if .Values.postgresql.enabled }}
+        - name: POSTGRES_HOST
+          value: {{ template "judge0.postgresql.fullname" . }}
+        {{- else }}
+        - name: POSTGRES_HOST
+          value: {{ .Values.external.postgresql.host | quote }}
+        {{- end }}
       containers:
       - name: {{ .Chart.Name }}-worker
         image: {{ template "judge0.image" . }}
         securityContext:
           privileged: true
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args:
         - bash
         - -c
@@ -202,7 +262,7 @@ spec:
           value:  {{ .Values.COUNT | quote }}
         {{- if .Values.redis.enabled }} 
         - name: REDIS_HOST
-          value: {{ template "judge0.redis.fullname" . }}
+          value: {{ template "judge0.redis.fullname" . }}-master
         - name: REDIS_PASSWORD
           value: {{ .Values.redis.password | quote }}
         - name: REDIS_PORT
