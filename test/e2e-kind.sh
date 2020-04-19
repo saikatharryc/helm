@@ -41,7 +41,7 @@ create_kind_cluster() {
     kind create cluster --name "$CLUSTER_NAME" --config test/kind-config.yaml --image "kindest/node:$K8S_VERSION" --kubeconfig config --wait 60s
 
     echo 'Copying kubeconfig to container...'
-    echo  "$KUBECONFIG"
+    # echo  "$KUBECONFIG"
     cat config
 
     sudo docker cp config ct:/root/.kube/config
