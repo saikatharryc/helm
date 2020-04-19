@@ -25,7 +25,7 @@ jobs:
 
 workflows:
   version: 2
-  untagged-build:
+  lint-install:
     jobs:
       - lint-scripts
       - lint-charts
