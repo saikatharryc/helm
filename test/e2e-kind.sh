@@ -12,6 +12,7 @@ readonly K8S_VERSION=v1.17.0
 run_ct_container() {
     echo 'Running ct container...'
     docker run --rm --interactive --detach --network host --name ct \
+        -e KUBECONFIG="/root/.kube/config" \
         --volume "$(pwd)/test/ct.yaml:/etc/ct/ct.yaml" \
         --volume "$(pwd):/workdir" \
         --workdir /workdir \
@@ -47,7 +48,6 @@ create_kind_cluster() {
     docker_exec touch  /root/.kube/config
     sudo docker cp config ct:/root/.kube/config
     docker_exec touch /root/.kube/config
-    docker_exec set KUBECONFIG=/root/.kube/config
     docker_exec kubectl cluster-info
     echo
 
