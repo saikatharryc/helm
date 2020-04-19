@@ -44,9 +44,9 @@ create_kind_cluster() {
 
     echo 'Copying kubeconfig to container...'
     
-    kubectl config view --context kind-chart-testing>>conf
+    cat ~/kube/.config
 
-    docker cp conf ct:/root/.kube/config
+    docker cp ~/kube/.config ct:/root/.kube/config
 
     docker_exec kubectl cluster-info
     echo
