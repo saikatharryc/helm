@@ -1,0 +1,44 @@
+apiVersion: v1
+entries:
+  judge0:
+  - apiVersion: v2
+    appVersion: 1.5.0
+    created: "2020-04-19T08:25:04.499155947Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      tags:
+      - judge0-database
+      version: 7.7.2
+    - condition: redis.enabled
+      name: redis
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      tags:
+      - judge0-redis
+      version: 10.2.0
+    description: Helm implementation of Judge0 | Free,robust and scalable open-source
+      online code execution system.
+    digest: b972de42829805551c018347da54f69a00215d0ca11a94cd51638fb93b3129a4
+    home: https://api.judge0.com
+    icon: https://github.com/judge0/api/raw/master/.github/wallpaper.png?raw=true
+    keywords:
+    - online-judge
+    - online-compiler
+    - competitive-programming
+    - code-executor
+    - code-runner
+    - code-execution
+    - compiler
+    - judge0
+    maintainers:
+    - email: saikatchakrabortty2@gmail.com
+      name: saikatharryc
+      url: https://github.com/saikatharryc/
+    name: judge0
+    sources:
+    - https://github.com/judge0/api
+    urls:
+    - https://github.com/saikatharryc/helm/releases/download/judge0-1.0.12/judge0-1.0.12.tgz
+    version: 1.0.12
+generated: "2020-04-19T08:25:04.41409293Z"
