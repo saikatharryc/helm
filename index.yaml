@@ -41,4 +41,27 @@ entries:
     urls:
     - https://github.com/saikatharryc/helm/releases/download/judge0-1.0.12/judge0-1.0.12.tgz
     version: 1.0.12
+  muescheli:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2020-04-20T14:48:29.274254711Z"
+    description: muescheli antivirus
+    digest: 2ebbcea975d05bfbda22f913ff0433e642c82bb4cf12ff6d68c5dac6aa5732f3
+    home: https://github.com/saikatharryc/muescheli
+    keywords:
+    - muescheli
+    - antivirus
+    - scan
+    maintainers:
+    - email: saikatchakrabortty2@gmail.com
+      name: saikatharryc
+      url: https://github.com/saikatharryc/
+    name: muescheli
+    sources:
+    - https://github.com/saikatharryc/muescheli
+    - https://github.com/monostream/muescheli
+    - https://github.com/lastops/muescheli
+    urls:
+    - https://github.com/saikatharryc/helm/releases/download/muescheli-18.11.1/muescheli-18.11.1.tgz
+    version: 18.11.1
 generated: "2020-04-19T08:25:04.41409293Z"
