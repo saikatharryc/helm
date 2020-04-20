@@ -1,0 +1,42 @@
+apiVersion: {{ template "muescheli.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ .Release.Namespace }}-{{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      release:  {{ .Release.Name | quote }}
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release:  {{ .Release.Name | quote }}
+    spec:
+      restartPolicy: Always
+{{- include "muescheli.imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}-clamd
+        image: "lastops/clamav"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3310
+          name: api
+          protocol: TCP
+      - name: {{ .Chart.Name }}-muescheli
+        image: {{ template "muescheli.image" . }}
+        imagePullPolicy: Always
+        env:
+        - name: CLAMD_HOST
+          value: localhost
+        - name: CLAMD_PORT
+          value: '3310'
+        ports:
+          - name: http-port
+            containerPort: 8091

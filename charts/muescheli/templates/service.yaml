@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+  labels:
+    app: {{ .Chart.Name }}-service
+    kubernetes.io/name: {{ .Chart.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+  annotations:
+    {{- range $key, $value := .Values.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+
+spec:
+  type: {{ .Values.service.type }}
+  {{- if (or (eq .Values.service.type "LoadBalancer") (eq .Values.service.type "NodePort")) }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if eq .Values.service.type "LoadBalancer" }}
+  loadBalancerIP: {{ default "" .Values.service.loadBalancerIP | quote }}
+  {{- end }}
+  ports:
+    - name: http
+      port: {{  default "http"  .Values.service.port }}
+      targetPort: http-port
+      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.http)))}}
+      nodePort: {{ .Values.service.nodePorts.http }}
+      {{- end }}
+  selector:
+    app: {{ .Chart.Name }}
