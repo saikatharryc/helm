@@ -2,25 +2,31 @@
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry and imagePullSecrets
 image:
+    # image.registry -- Image registry
     registry: docker.io
+    # image.repository -- Image Repository
     repository: saikatharryc/muescheli
+    # image.tag -- Image Tag
     tag: latest
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
 service:
+    # service.type -- Service Type (i.e LoadBalancer,NodePort etc)
     type: ClusterIP
-    # HTTP Port
+    # service.port -- HTTP Port
     port: 8091
     ## loadBalancerIP:
     ##
     ## nodePorts:
     ##   http: <to set explicitly, choose port between 30000-32767>
     nodePorts:
+        # service.nodePorts.http -- Nodepport if available
         http:
     ## Enable client source IP preservation
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
+    # service.externalTrafficPolicy -- External Traffic Policy
     externalTrafficPolicy: Cluster
-    ## Service annotations done as key:value pairs
+    # service.annotations -- Service annotations done as key:value pairs
     annotations:
