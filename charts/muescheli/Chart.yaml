@@ -1,0 +1,18 @@
+apiVersion: v2
+name: muescheli
+version: 18.11.1
+appVersion: 1.0.1
+description: muescheli antivirus
+keywords:
+  - muescheli
+  - antivirus
+  - scan
+home: https://github.com/saikatharryc/muescheli
+sources:
+  - https://github.com/saikatharryc/muescheli
+  - https://github.com/monostream/muescheli
+  - https://github.com/lastops/muescheli
+maintainers:
+  - name: saikatharryc
+    email: saikatchakrabortty2@gmail.com
+    url: https://github.com/saikatharryc/
