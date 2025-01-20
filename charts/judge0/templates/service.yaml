@@ -23,9 +23,9 @@ spec:
   loadBalancerIP: {{ default "" .Values.service.loadBalancerIP | quote }}
   {{- end }}
   ports:
-    - name: http
+    - name: http-port
       port: {{  default "http"  .Values.service.port }}
-      targetPort: http
+      targetPort: http-port
       {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.http)))}}
       nodePort: {{ .Values.service.nodePorts.http }}
       {{- end }}
